@@ -1,0 +1,174 @@
+%__________________Task1_________________________
+function F=Func1(x, y)
+    a = 2, b = 3, c = 4, d = 5;
+    F=-a*x./c -b*y./c - d./c;
+end
+
+Lx = linspace(-3, 3, 50);
+Ly = linspace(-3, 3, 50);
+[X,Y] = meshgrid(Lx, Ly);
+Z = Func1(X, Y);
+surfc(X, Y, Z);
+xlabel('x'); ylabel('y'); zlabel('z');
+
+%__________________Example 2 (Касательная)_________________________
+t = 0:0.01:6*pi;
+x = sin(t);
+y = 2*cos(t);
+z = t;
+t0 = 7*pi/2;
+plot3(x, y, t, "LineWidth", 3, "Color",[0.8 0.5 0.5]);
+hold on
+plot3(sin(t0), 2*cos(t0), t0, "Marker", "*", "LineWidth", 10, "Color",[0.2 0.5 0.5]);
+grid on
+xlabel('X'), ylabel('Y'), zlabel('Z'); 
+x1_kas = sin(t0)+cos(t0+0.01);
+y1_kas = 2*cos(t0)-2*sin(t0+0.01);
+z1_kas = t0+1;
+x2_kas = sin(t0)-cos(t0+0.01);
+y2_kas = 2*cos(t0)+2*sin(t0+0.01);
+z2_kas = t0-1;
+hold on
+line([x1_kas, x2_kas], [y1_kas, y2_kas], [z1_kas, z2_kas], 'LineStyle', '--', 'LineWidth', 2);
+
+%__________________________Task2________________________________________
+
+x = -10:0.2:10;
+y = -10:0.2:10;
+[X,Y] = meshgrid(-5:.2:5);
+Z = Y.*sin(X) - X.*cos(Y);
+plot3(X,Y,Z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+x = -10:0.5:10;
+y = -10:0.5:10;
+[X,Y] = meshgrid(-5:.2:5);
+Z = Y.*sin(X) - X.*cos(Y);
+s = mesh(X,Y,Z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+x = -10:0.2:10;
+y = -10:0.2:10;
+a = 5;
+[X,Y] = meshgrid(-10:0.2:10);
+R = sqrt(X.^2 + Y.^2);
+Z = a.*sin(R)./R;
+plot3(X,Y,Z)
+title('Task_1');
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+x = -10:0.2:10;
+y = -10:0.2:10;
+a = 5;
+[X,Y] = meshgrid(-10:0.2:10);
+R = sqrt(X.^2 + Y.^2);
+Z = a.*sin(R)./R;
+mesh(X,Y,Z)
+title('Task_1');
+xlabel('x');
+ylabel('y');
+zlabel('z');
+%_______________________Task3______________________________________
+%-------Однополостный гиперболоид вращения-------
+v = -15:0.2:15;
+u = -15:0.2:15;
+a = 5; c = 3;
+[U, V] = meshgrid(u, v);
+x = a*cosh(V).*cos(U);
+y = a*cosh(V).*sin(U);
+z = c.*sinh(V);
+surf(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+surfc(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+mesh(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+%-------Круговой тор-----------------
+
+a = 5; b = 3;
+[U, V] = meshgrid(u, v);
+x1 = (a+b*cos(V)).*cos(U);
+y1 = (a+b*cos(V)).*sin(U);
+z1 = b.*sin(V);
+surf(x1,y1,z1);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+surfc(x1,y1,z1);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+mesh(x1,y1,z1);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+%----Морская раковина--------------------
+v = -pi:0.1:pi;
+u = 0:0.1:8*pi;
+[U, V] = meshgrid(u, v);
+x=U.*cos(U).*(cos(V)+1);
+y=U.*sin(U).*(cos(V)+1);
+z=U.*sin(V)-((U+3).*pi./8).^2-20;
+surf(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+surfc(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+mesh(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+%-----------Лента Мёбиуса------------------
+u = 0:0.03:2*pi;
+v = -0.5:0.05:0.5; 
+a = 5; b = 3;
+[U, V] = meshgrid(u, v);
+x = (1+V.*cos(0.5.*U)).*cos(U);
+y = (1+V.*cos(0.5.*U)).*sin(U);
+z = V.*sin(0.5.*U);
+surf(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+surfc(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+mesh(x,y,z);
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+%______________Task5______________________
+[X, Y, Z] = meshgrid(-3:0.1:3);
+F =@(X, Y, Z) -(X.^2).*(Z.^3)-9*(Y.^2).*(Z.^3)./80+(X.^2+9/4*Y.^2+Z.^2-1).^3;
+fimplicit3(F);
+colormap('cool');
+xlabel('x');
+ylabel('y');
+zlabel('z');
