@@ -18,14 +18,25 @@ xlabel('x')
 ylabel('f(x)');
 
 //Example 3//
-A = @humps;
 m = fminbnd(@humps,0.25,1,optimset('Display','off'));
-fplot(A, [0, 2]);
+x = 0:0.01:2;
+y = humps(x);
+plot(x,y, "LineWidth", 3)
+[K, I] = max(humps(x));
 xlabel('x');
 ylabel('y');
 title('Example 3');
 hold on 
-plot(m,humps(m),'r*');
+plot(m,humps(m),'r*', 'LineWidth', 5);
+hold on
+plot(x(I), K, 'r*', "LineWidth", 5);
+hold on 
+for t = 0:0.01:2
+    if (humps(t) > 20) && (humps(t) < 40)
+        Z = humps(t);
+    plot(t, Z, 'Marker',"+", "Color", [0.5, 0.2, 0.3], "LineWidth", 5);
+    end
+end
 
 //task 1//
 x = linspace(-15, 15, 170);
