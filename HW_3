@@ -22,6 +22,26 @@ B2 = [3 -2 1];
 
 
 3)
+x=4;
+A = [1, -2, 6, -10, 16]
+A1 = polyder(A)
+V = horner(A, x)
+V1 = horner(A1, x)
+
+% Проверка:
+Y=polyval(A,x);
+res = x^4-2*x^3+6*x^2-10*x+16;
+V - result
+
+Y1=polyval(A1,x);
+result1 = polyder(A)
+res1 = 0;
+for i=1:4
+    res1 = res1 + result1(i)*x^(length(result1)-i);
+end
+res1
+V1 - res1
+
 
 4)
 
@@ -37,6 +57,30 @@ A3 = [1, 0, 0, 0, -1];
 [r3, p3, K3] = residue([1, 0, 0], A3)
 
 6)
+x2 = [-1 0 1 2 3];
+y2 = [6 5 0 3 2];
+xx2 = -1:0.1:3;
+yy2 = lagrange(x2, y2, xx2);
+figure('Color', 'w')
+hold on
+plot(xx2,yy2,'r')
+plot(x2, y2, 'bo')
+
+
+n = 8;
+x1(1:n, 1) = 0;
+y1(1:n, 1) = 0;
+for i=1:n
+    x1(i, 1) = i;
+    y1(i, 1) = 1/i;
+end
+xx1 = 1:0.1:n;
+yy1 = lagrange(x1, y1, xx1);
+figure('Color', 'w')
+hold on
+plot(xx1, yy1, 'r')
+plot(x1, y1, 'bo')
+
 
 7)
 P1 = [1, -6, 15, -14];
@@ -66,7 +110,20 @@ end
 
 
 8)
-
+n = 5;
+A = rand(n);
+All_R = eig(A);
+All_Rm = eig(A, "matrix")
+P = poly(All_R)
+R = All_R(imag(All_R)==0);
+x = linspace(min(All_R)-1, max(All_R)+1,100);
+F = polyval(P, x);
+plot(x, F);
+grid on
+hold on
+for i=1:length(R)
+    scatter(R(i), 0, 'filled','red')
+end
 
 9)
 syms x
