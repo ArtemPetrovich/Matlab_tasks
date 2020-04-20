@@ -44,6 +44,22 @@ V1 - res1
 
 
 4)
+syms x;
+n = 5;
+P = x^(2*n)-n*x^(n+1)+n*x^(n-1)-1
+P1 = sym2poly(x^(2*n)-n*x^(n+1)+n*x^(n-1)-1)
+All_R = roots(P1)
+
+R = All_R(imag(All_R) == 0)
+x = linspace(min(R)-0.5, max(R)+0.5, 50);
+F = polyval(P1, x)
+plot(x, F);
+grid on
+hold on
+for i = 1:(length(R))
+    scatter(R(i), 0, 'filled','red')
+end
+%%Пока не понял, как вытащить кратные корни
 
 
 5)
