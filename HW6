@@ -1,0 +1,95 @@
+%Task1
+syms x y
+f1 = x.^5+4.*x.^4-2.*x.^3-14.*x.^2-3.*x-18;
+Ans1 = factor(f1)
+f2 = x.^3+x.^2.*y+x.^2-2.*x.*y.^2+x.*y-2.*y.^2;
+Ans2 = factor(f2)
+
+
+%Task2
+syms x
+f1 = x.*exp(-x)
+Ans1 = limit(f1, +inf)
+f2 = (tan(x)).^tan(2.*x)
+Ans2 = limit(f2, pi/4)
+f3 = atan(1/(1-x))
+Ans3 = limit(f3,x,1,'right')
+
+
+%Task3
+syms x
+f1 = atan(x)./2-x./(2.*(1+x.^2).^2)
+Res1 = diff(f1)
+Ans1 = simplify(Res1)
+f2 = 3.*x.^4-14.*x.^3+12.*x.^2+24.*x+6
+Res2 = diff(f2)
+Ans2 = simplify(Res2)
+f3 = (sin(3.*x)-cos(3.*x)).^2
+Res3 = diff(f3)
+Ans3 = simplify(Res3)
+
+
+%Task4
+syms x
+f1=sqrt(1-x.^2)./x.^2
+Ans1 = int(f1)
+f4 = 15.*sqrt(x+3)./((x+3).^2.*sqrt(x))
+Ans4 = int(f4,x,[1/8,1])
+f5 = 1./(1+x.^2)
+Ans5 = int(f5,x,[0,+inf])
+
+
+%Task5
+syms x k
+Ans1 = symsum(1./k.^2,1,+inf)
+Ans3 = symsum(x.^k,k,0,+inf)
+Ans4 = symsum(((3-x).^(2.*k))./sqrt(k),k,1,+inf)
+
+
+%Task6
+syms x
+f1=exp(x); a1=0; n1=5;
+T1=taylor(f1,x,a1,'Order',n1)
+
+f3=sin(x).^2; a3=0; n3=10;
+T3=taylor(f3,x,a3,'Order',n3)
+
+x=linspace(-2,2,100);
+plot(x,exp(x), 'Color', 'Red', "LineWidth", 2)
+hold on
+GT1 = ezplot(T1,[-2,2])
+set(GT1,'Color', 'Blue',"LineWidth", 2)
+hold off
+
+plot(x, sin(x).^2, 'Color', 'Red', "LineWidth", 2)
+hold on
+GT3 = ezplot(T3,[-2,2])
+set(GT3,'Color', 'Blue',"LineWidth", 2)
+
+
+%Task7
+syms x
+f=exp(1./(1-x.^2))/(1+x.^2)
+G = ezplot(f,[-7,7]);
+set(G, 'Color', 'Red', 'Linewidth', 1.5);
+H_Asymp = limit(f,inf)
+hold on
+GH_Asymp = ezplot(H_Asymp, [-7,7]);
+set(GH_Asymp, 'LineStyle', '--', 'Color', 'Blue');
+V_Asymp = solve(1-x.^2) %числитель улетает на бесконечность
+xline(double(V_Asymp(1)), 'LineStyle', '--', 'Linewidth', 1.5);
+xline(double(V_Asymp(2)), 'LineStyle', '--', 'Linewidth', 1.5);
+
+f1 = diff(f)
+f1 = simplify(f1)
+crit_pts = solve(f1)
+
+f2 = diff(f1)
+f2 = simplify(f2)
+inflec_pt = solve(f2)
+
+
+plot(double(crit_pts), double(subs(f,crit_pts)),'ro', 'Color', 'Black', 'LineWidth', 2)
+plot(double(inflec_pt), double(subs(f,inflec_pt)),'ro', 'Color', 'Green', 'LineWidth', 2)
+%двум точкам перегиба явно плохо =) или так и должно быть
+hold off
