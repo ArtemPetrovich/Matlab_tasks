@@ -1,0 +1,199 @@
+%Task 1
+%b)
+function F=Func_T51b(x, a1, b1)
+   global  par T
+   global a1 b1
+   F = 1./((a1.*cos(x)+b1.*sin(x)).^2);
+   mu=num2str(par);
+   T=['1/(a1.*cos(x)+b1.*sin(x)).^2', mu];
+end
+
+
+clear
+global par T
+T='0';
+par=0.1';
+a=0; b=2*pi/3;
+N=100; L1=0; L2=2*pi/3; 
+X=linspace(L1,L2,N);
+global a1 b1
+a1=1; b1=2;
+
+Y=Func_T51b(X,a1,b1);
+plot(X,Y); grid on;
+xlabel('x'); ylabel('f(x)'); title(T)
+
+xr=ginput(2);
+[x_m,y_m]=fminbnd(@Func_T51b,xr(1,1),xr(2,1));
+hold on
+plot(x_m,y_m,'r*',xr(1,1),xr(1,2),'g*',xr(2,1),xr(2,2),'g*')
+hold off
+
+
+%b)
+function F=Func_T51c(x)
+   global  par T
+   F = 2-abs(x).*exp(-abs(x-1));
+   mu=num2str(par);
+   T=[2-abs(x).*exp(-abs(x-1)), mu];
+end
+
+
+clear
+global par T
+T='0';
+par=0.1';
+a=0; b=4;
+N=100; L1=0; L2=4; 
+X=linspace(L1,L2,N);
+
+Y=Func_T51c(X);
+plot(X,Y); grid on;
+xlabel('x'); ylabel('f(x)'); title(T)
+
+xr=ginput(2);
+[x_m,y_m]=fminbnd(@Func_T51c,xr(1,1),xr(2,1));
+hold on
+plot(x_m,y_m,'r*',xr(1,1),xr(1,2),'g*',xr(2,1),xr(2,2),'g*')
+hold off
+
+
+%d)
+function F=Func_T51d(x, m)
+   global  par T
+   global m
+   F = 0;
+   for i=1:m
+   F_last = F;
+   F = F_last + (cos(i.*x)-sin(i.*x)).^2;
+   end
+   mu=num2str(par);
+   T=[F, mu];
+end
+
+
+clear
+global par T m
+T='0';
+par=0.1';
+a=0; b=2*pi;
+N=200; L1=0; L2=2*pi; 
+X=linspace(L1,L2,N);
+m=3;
+
+Y=Func_T51d(X,m);
+plot(X,Y); grid on;
+xlabel('x'); ylabel('f(x)'); title(T)
+
+xr=ginput(2);
+[x_m,y_m]=fminbnd(@Func_T51d,xr(1,1),xr(2,1));
+hold on
+plot(x_m,y_m,'r*',xr(1,1),xr(1,2),'g*',xr(2,1),xr(2,2),'g*')
+hold off
+
+
+%e)
+function F=Func_T51e(x, m)
+   global m
+   F = 0;
+   d = [3,5,2,-1];
+   
+   for i=1:m
+   F_last = F;
+   F = F_last + (d(i)-sin(i.*x)).^2;
+   end
+end
+
+
+clear
+global m
+a=0; b=2*pi;
+N=200; L1=0; L2=2*pi; 
+X=linspace(L1,L2,N);
+m=4;
+
+Y=Func_T51e(X,m);
+plot(X,Y); grid on;
+xlabel('x'); ylabel('f(x)');
+
+xr=ginput(2);
+[x_m,y_m]=fminbnd(@Func_T51e,xr(1,1),xr(2,1));
+hold on
+plot(x_m,y_m,'r*',xr(1,1),xr(1,2),'g*',xr(2,1),xr(2,2),'g*')
+hold off
+
+
+%Task 2
+%a)
+N=200; L1=0; L2=1; 
+X=linspace(L1,L2,N);
+A = [2, 4, 8, 12];
+for i=1:4
+        Y=X.^A(i).*log(X);
+        fun=@(X)X.^A(i).*log(X);
+        fun1=@(X)fun(X)
+        [Xmin, Ymin] = fminbnd(fun1,L1,L2)
+        plot(Xmin,Ymin, 'ro', 'Color', 'Black')
+        hold on
+        plot(X,Y); grid on;
+        hold on
+end
+xlabel('x'); ylabel('f(x)');
+
+
+%b)
+N=200; L1=0; L2=1; 
+X=linspace(L1,L2,N);
+A = [2, 3];
+B = [2, 3];
+
+for i=1:2
+    for j=1:2
+        Y=X.^A(i).*(1-X).^B(j);
+        fun=@(X)X.^A(i).*(1-X).^B(j);
+        fun1=@(X)-fun(X)
+        [Xmax, NegYmax] = fminbnd(fun1,L1,L2)
+        Ymax = -NegYmax;
+        plot(Xmax,fun(Xmax), 'ro')
+        hold on
+        plot(X,Y); grid on;
+        hold on
+    end
+end
+xlabel('x'); ylabel('f(x)');
+
+
+%c)
+N=200; L1=0; L2=1; 
+X=linspace(L1,L2,N);
+A = [2, 3];
+B = [2, 3];
+
+for i=1:2
+    for j=1:2
+        Y=X.^A(i).*(1-X).^B(j);
+        fun=@(X)X.^A(i).*(1-X).^B(j);
+        fun1=@(X)-fun(X)
+        [Xmax, NegYmax] = fminbnd(fun1,L1,L2)
+        Ymax = -NegYmax;
+        plot(Xmax,fun(Xmax), 'ro')
+        hold on
+        plot(X,Y); grid on;
+        hold on
+    end
+end
+xlabel('x'); ylabel('f(x)');
+
+%Task 3
+fminbnd  находит минимум функции с одной переменной на фиксированном интервале.
+fminsearch находит минимум неограниченной многомерной функции.
+
+%Task 4
+'Display' — уровень отображения
+'FunValCheck' — проверка, являются ли значения функции действительны
+'MaxFunEvals' — максимальное количество оценок функции
+'MaxIter' — максимальное число итераций
+'OutputFcn' — выходная функция
+'PlotFcns' — функции построения графиков
+'TolFun' — допуск к завершению по значению функции
+'TolX' — допуск к завершению на х, текущая точка
